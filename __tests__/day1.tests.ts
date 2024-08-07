@@ -4,6 +4,7 @@ import solution, {
   findLastDigitString,
   findFirstDigitChar,
   findLastDigitChar,
+  findFirstNumber,
 } from "../src/day1";
 
 const calibrationValuesPart1 = [
@@ -74,6 +75,14 @@ describe("no digits in strings", () => {
   });
 });
 
-// some cases to account for
-// no digits in string
-// only 1 digit in string
+describe("find first match", () => {
+  it("should return a string if appears before a char", () => {
+    expect(findFirstNumber("two1nine")).toBe(2);
+    expect(findFirstNumber("FA_Btwo1nine")).toBe(2);
+  });
+
+  it("should return a char if appears before a string", () => {
+    expect(findFirstNumber("4nineeightseven2")).toBe(4);
+    expect(findFirstNumber("abc4FA_Btwo1nine")).toBe(4);
+  });
+});

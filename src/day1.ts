@@ -60,6 +60,17 @@ export function findLastDigitChar(str: string): [number, string] | undefined {
   return findFirstDigitChar(str.split("").reverse().join());
 }
 
+export function findFirstNumber(str: string): number {
+  const [firstCharIndex, firstChar] = findFirstDigitChar(str);
+  const [firstStringIndex, firstString] = findFirstDigitString(str);
+  let retVal: number;
+  if (firstCharIndex < firstStringIndex) retVal = parseInt(firstChar);
+  else if (firstCharIndex > firstStringIndex)
+    retVal = digitStrings.indexOf(firstString) + 1;
+  else retVal = 0;
+  return retVal;
+}
+
 export function findFirstLastDigit(str: string): number {
   const firstDigit = str.split("").find((el) => parseInt(el));
   const lastDigit = str
