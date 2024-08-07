@@ -5,6 +5,7 @@ import solution, {
   findFirstDigitChar,
   findLastDigitChar,
   findFirstNumber,
+  findLastNumber,
 } from "../src/day1";
 
 const calibrationValuesPart1 = [
@@ -64,6 +65,16 @@ describe("findDigitChars", () => {
     expect(findLastDigitChar("zoneight234")[1]).toBe("4");
     expect(findLastDigitChar("7pqrstsixteen")[1]).toBe("7");
   });
+
+  it("should return the correct index for the last digit char", () => {
+    //expect(findLastDigitChar("two1nine")[0]).toBe(3);
+    expect(findLastDigitChar("t1w")[0]).toBe(1);
+    expect(findLastDigitChar("tt1w")[0]).toBe(2);
+    expect(findLastDigitChar("t1wt")[0]).toBe(1);
+    expect(findLastDigitChar("tt1wt")[0]).toBe(2);
+    expect(findLastDigitChar("tt2abcd1wt")[0]).toBe(7);
+    //expect(findLastDigitChar("two1nine")[1]).toBe("1");
+  });
 });
 
 describe("no digits in strings", () => {
@@ -84,5 +95,17 @@ describe("find first match", () => {
   it("should return a char if appears before a string", () => {
     expect(findFirstNumber("4nineeightseven2")).toBe(4);
     expect(findFirstNumber("abc4FA_Btwo1nine")).toBe(4);
+  });
+});
+
+describe("find last match", () => {
+  it("should return a string if it's the last thing to appear", () => {
+    expect(findLastNumber("two1nine")).toBe(9);
+    expect(findLastNumber("FA_Btwo1nine")).toBe(9);
+  });
+
+  it("should return a char if it's the last thing to appear", () => {
+    expect(findLastNumber("4nineeightseven2")).toBe(2);
+    expect(findLastNumber("abc4FA_Btwo1nin")).toBe(1);
   });
 });

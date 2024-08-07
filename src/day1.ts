@@ -57,7 +57,21 @@ export function findFirstDigitChar(str: string): [number, string] | undefined {
 }
 
 export function findLastDigitChar(str: string): [number, string] | undefined {
-  return findFirstDigitChar(str.split("").reverse().join());
+  // there is no findLast in node yet
+  const reversedStringArr = str.split("").reverse();
+  const reversedFirstDigitIndex = reversedStringArr.findIndex((el) =>
+    parseInt(el),
+  );
+
+  let retVal = undefined;
+
+  if (reversedFirstDigitIndex > -1) {
+    retVal = [
+      str.length - 1 - reversedFirstDigitIndex,
+      reversedStringArr[reversedFirstDigitIndex],
+    ];
+  }
+  return retVal;
 }
 
 export function findFirstNumber(str: string): number {
@@ -67,6 +81,17 @@ export function findFirstNumber(str: string): number {
   if (firstCharIndex < firstStringIndex) retVal = parseInt(firstChar);
   else if (firstCharIndex > firstStringIndex)
     retVal = digitStrings.indexOf(firstString) + 1;
+  else retVal = 0;
+  return retVal;
+}
+
+export function findLastNumber(str: string): number {
+  const [lastCharIndex, lastChar] = findLastDigitChar(str);
+  const [lastStringIndex, lastString] = findLastDigitString(str);
+  let retVal: number;
+  if (lastCharIndex > lastStringIndex) retVal = parseInt(lastChar);
+  else if (lastCharIndex < lastStringIndex)
+    retVal = digitStrings.indexOf(lastString) + 1;
   else retVal = 0;
   return retVal;
 }
