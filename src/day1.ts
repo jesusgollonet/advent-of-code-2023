@@ -75,8 +75,12 @@ export function findLastDigitChar(str: string): [number, string] | undefined {
 }
 
 export function findFirstNumber(str: string): number {
-  const [firstCharIndex, firstChar] = findFirstDigitChar(str);
-  const [firstStringIndex, firstString] = findFirstDigitString(str);
+  console.log("findFirstNumber", str);
+  const [firstCharIndex, firstChar] = findFirstDigitChar(str) || [];
+  const [firstStringIndex, firstString] = findFirstDigitString(str) || [];
+  console.log(firstCharIndex, firstChar);
+  console.log(firstStringIndex, firstString);
+
   let retVal: number;
   if (firstCharIndex < firstStringIndex) retVal = parseInt(firstChar);
   else if (firstCharIndex > firstStringIndex)
@@ -86,8 +90,8 @@ export function findFirstNumber(str: string): number {
 }
 
 export function findLastNumber(str: string): number {
-  const [lastCharIndex, lastChar] = findLastDigitChar(str);
-  const [lastStringIndex, lastString] = findLastDigitString(str);
+  const [lastCharIndex, lastChar] = findLastDigitChar(str) || [];
+  const [lastStringIndex, lastString] = findLastDigitString(str) || [];
   let retVal: number;
   if (lastCharIndex > lastStringIndex) retVal = parseInt(lastChar);
   else if (lastCharIndex < lastStringIndex)
@@ -106,11 +110,12 @@ export function findFirstLastDigit(str: string): number {
 }
 
 export function findFirstLastNumber(str: string): number {
+  console.log("find first last number", str);
   return Number(`${findFirstNumber(str)}${findLastNumber(str)}`);
 }
 
 export default function solution(calibrationValues: string[]): number {
-  return calibrationValues.map(findFirstLastDigit).reduce((prev, accum) => {
+  return calibrationValues.map(findFirstLastNumber).reduce((prev, accum) => {
     accum += prev;
     return accum;
   }, 0);

@@ -38,9 +38,26 @@ describe("findFirstLastDigit", () => {
 describe("part1 solution", () => {
   it("should return the sum of the values", () => {
     expect(solution(calibrationValuesPart1)).toBe(142);
+    expect(solution(calibrationValuesPart2)).toBe(281);
   });
 });
 describe("findDigitStrings", () => {
+  it("should find the first digit string", () => {
+    expect(findFirstDigitString("two1nine")[1]).toBe("two");
+    expect(findFirstDigitString("eightwothree")[1]).toBe("eight");
+    expect(findFirstDigitString("zoneight234")[1]).toBe("one");
+  });
+  it("should return the right index for the found digit string", () => {
+    expect(findFirstDigitString("eightwothree")[0]).toBe(0);
+    expect(findFirstDigitString("xtwone3four[]")[0]).toBe(1);
+  });
+
+  it("should find the first digit string", () => {
+    expect(findFirstDigitString("two1nine")[1]).toBe("two");
+    expect(findFirstDigitString("eightwothree")[1]).toBe("eight");
+    expect(findFirstDigitString("zoneight234")[1]).toBe("one");
+  });
+
   it("should find the first digit string", () => {
     expect(findFirstDigitString("two1nine")[1]).toBe("two");
     expect(findFirstDigitString("eightwothree")[1]).toBe("eight");
@@ -109,6 +126,10 @@ describe("find last match", () => {
     expect(findLastNumber("4nineeightseven2")).toBe(2);
     expect(findLastNumber("abc4FA_Btwo1nin")).toBe(1);
   });
+});
+
+describe("find no match", () => {
+  expect(findFirstNumber("abcde")).toBe(0);
 });
 
 describe("find first last number", () => {
