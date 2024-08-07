@@ -2,6 +2,8 @@ import solution, {
   findFirstLastDigit,
   findFirstDigitString,
   findLastDigitString,
+  findFirstDigitChar,
+  findLastDigitChar,
 } from "../src/day1";
 
 const calibrationValuesPart1 = [
@@ -35,18 +37,32 @@ describe("part1 solution", () => {
     expect(solution(calibrationValuesPart1)).toBe(142);
   });
 });
-
 describe("findDigitStrings", () => {
   it("should find the first digit string", () => {
-    expect(findFirstDigitString("two1nine")).toBe("two");
-    expect(findFirstDigitString("eightwothree")).toBe("eight");
-    expect(findFirstDigitString("zoneight234")).toBe("one");
+    expect(findFirstDigitString("two1nine")[1]).toBe("two");
+    expect(findFirstDigitString("eightwothree")[1]).toBe("eight");
+    expect(findFirstDigitString("zoneight234")[1]).toBe("one");
   });
 
   it("should find the last digit string", () => {
-    expect(findLastDigitString("two1nine")).toBe("nine");
-    expect(findLastDigitString("eightwothree")).toBe("three");
-    expect(findLastDigitString("zoneight234")).toBe("eight");
-    expect(findLastDigitString("7pqrstsixteen")).toBe("six");
+    expect(findLastDigitString("two1nine")[1]).toBe("nine");
+    expect(findLastDigitString("eightwothree")[1]).toBe("three");
+    expect(findLastDigitString("zoneight234")[1]).toBe("eight");
+    expect(findLastDigitString("7pqrstsixteen")[1]).toBe("six");
+  });
+});
+
+describe("findDigitChars", () => {
+  it("should find the first digit char", () => {
+    expect(findFirstDigitChar("two1nine")[1]).toBe("1");
+    expect(findFirstDigitChar("eightwothree")).toBe(undefined);
+    expect(findFirstDigitChar("zoneight234")[1]).toBe("2");
+  });
+
+  it("should find the last digit char", () => {
+    expect(findLastDigitChar("two1nine")[1]).toBe("1");
+    expect(findLastDigitChar("eightwothree")).toBe(undefined);
+    expect(findLastDigitChar("zoneight234")[1]).toBe("4");
+    expect(findLastDigitChar("7pqrstsixteen")[1]).toBe("7");
   });
 });

@@ -10,7 +10,9 @@ const digitStrings = [
   "nine",
 ];
 
-export function findFirstDigitString(str: string): string {
+export function findFirstDigitString(
+  str: string,
+): [number, string] | undefined {
   let matches = [];
   for (let i = 0; i < digitStrings.length; i++) {
     let curDs = digitStrings[i];
@@ -24,10 +26,11 @@ export function findFirstDigitString(str: string): string {
     current = current[0] < prev[0] ? current : prev;
     return current;
   }, matches[0]);
-  return lowestMatch[1];
+
+  return lowestMatch[0] > -1 ? lowestMatch : undefined;
 }
 
-export function findLastDigitString(str: string): string {
+export function findLastDigitString(str: string): [number, string] | undefined {
   let matches = [];
   for (let i = 0; i < digitStrings.length; i++) {
     let curDs = digitStrings[i];
@@ -41,7 +44,20 @@ export function findLastDigitString(str: string): string {
     current = current[0] > prev[0] ? current : prev;
     return current;
   }, matches[0]);
-  return highestMatch[1];
+
+  return highestMatch[0] > -1 ? highestMatch : undefined;
+}
+
+export function findFirstDigitChar(str: string): [number, string] | undefined {
+  const firstDigitIndex = str.split("").findIndex((el) => parseInt(el));
+  let retVal = undefined;
+  if (firstDigitIndex > -1)
+    retVal = [firstDigitIndex, str.charAt(firstDigitIndex)];
+  return retVal;
+}
+
+export function findLastDigitChar(str: string): [number, string] | undefined {
+  return findFirstDigitChar(str.split("").reverse().join());
 }
 
 export function findFirstLastDigit(str: string): number {
