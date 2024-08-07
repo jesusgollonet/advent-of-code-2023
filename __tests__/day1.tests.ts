@@ -1,6 +1,7 @@
 import solution, {
   findFirstLastDigit,
   findFirstDigitString,
+  findLastDigitString,
 } from "../src/day1";
 
 const calibrationValuesPart1 = [
@@ -40,5 +41,12 @@ describe("findDigitStrings", () => {
     expect(findFirstDigitString("two1nine")).toBe("two");
     expect(findFirstDigitString("eightwothree")).toBe("eight");
     expect(findFirstDigitString("zoneight234")).toBe("one");
+  });
+
+  it("should find the last digit string", () => {
+    expect(findLastDigitString("two1nine")).toBe("nine");
+    expect(findLastDigitString("eightwothree")).toBe("three");
+    expect(findLastDigitString("zoneight234")).toBe("eight");
+    expect(findLastDigitString("7pqrstsixteen")).toBe("six");
   });
 });

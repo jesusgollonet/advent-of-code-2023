@@ -1,5 +1,4 @@
 const digitStrings = [
-  "zero",
   "one",
   "two",
   "three",
@@ -20,16 +19,29 @@ export function findFirstDigitString(str: string): string {
       matches.push([curDsIndex, curDs]);
     }
   }
-  console.log("matches", matches);
 
   const lowestMatch = matches.reduce((prev, current) => {
-    console.log("reduce!", prev, current);
-    console.log(prev, current);
     current = current[0] < prev[0] ? current : prev;
     return current;
   }, matches[0]);
-  console.log(lowestMatch);
   return lowestMatch[1];
+}
+
+export function findLastDigitString(str: string): string {
+  let matches = [];
+  for (let i = 0; i < digitStrings.length; i++) {
+    let curDs = digitStrings[i];
+    let curDsIndex = str.indexOf(curDs);
+    if (curDsIndex > -1) {
+      matches.push([curDsIndex, curDs]);
+    }
+  }
+
+  const highestMatch = matches.reduce((prev, current) => {
+    current = current[0] > prev[0] ? current : prev;
+    return current;
+  }, matches[0]);
+  return highestMatch[1];
 }
 
 export function findFirstLastDigit(str: string): number {
