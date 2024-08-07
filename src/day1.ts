@@ -27,7 +27,7 @@ export function findFirstDigitString(
     return current;
   }, matches[0]);
 
-  return lowestMatch[0] > -1 ? lowestMatch : undefined;
+  return lowestMatch && lowestMatch[0] > -1 ? lowestMatch : undefined;
 }
 
 export function findLastDigitString(str: string): [number, string] | undefined {
@@ -45,7 +45,7 @@ export function findLastDigitString(str: string): [number, string] | undefined {
     return current;
   }, matches[0]);
 
-  return highestMatch[0] > -1 ? highestMatch : undefined;
+  return highestMatch && highestMatch[0] > -1 ? highestMatch : undefined;
 }
 
 export function findFirstDigitChar(str: string): [number, string] | undefined {

@@ -55,14 +55,25 @@ describe("findDigitStrings", () => {
 describe("findDigitChars", () => {
   it("should find the first digit char", () => {
     expect(findFirstDigitChar("two1nine")[1]).toBe("1");
-    expect(findFirstDigitChar("eightwothree")).toBe(undefined);
     expect(findFirstDigitChar("zoneight234")[1]).toBe("2");
   });
 
   it("should find the last digit char", () => {
     expect(findLastDigitChar("two1nine")[1]).toBe("1");
-    expect(findLastDigitChar("eightwothree")).toBe(undefined);
     expect(findLastDigitChar("zoneight234")[1]).toBe("4");
     expect(findLastDigitChar("7pqrstsixteen")[1]).toBe("7");
   });
 });
+
+describe("no digits in strings", () => {
+  it("should return undefined if there are no string or char digits", () => {
+    expect(findFirstDigitChar("abcde")).toBe(undefined);
+    expect(findLastDigitChar("abcde")).toBe(undefined);
+    expect(findFirstDigitString("abcde")).toBe(undefined);
+    expect(findLastDigitString("abcde")).toBe(undefined);
+  });
+});
+
+// some cases to account for
+// no digits in string
+// only 1 digit in string
