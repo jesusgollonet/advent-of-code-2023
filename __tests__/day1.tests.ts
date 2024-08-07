@@ -6,6 +6,7 @@ import solution, {
   findLastDigitChar,
   findFirstNumber,
   findLastNumber,
+  findFirstLastNumber,
 } from "../src/day1";
 
 const calibrationValuesPart1 = [
@@ -107,5 +108,13 @@ describe("find last match", () => {
   it("should return a char if it's the last thing to appear", () => {
     expect(findLastNumber("4nineeightseven2")).toBe(2);
     expect(findLastNumber("abc4FA_Btwo1nin")).toBe(1);
+  });
+});
+
+describe("find first last number", () => {
+  it("should find the first and last number regardless fo string or char", () => {
+    expect(findFirstLastNumber("two1nine")).toBe(29);
+    expect(findFirstLastNumber("zoneight234")).toBe(14);
+    expect(findFirstLastNumber("abcone2threexyz")).toBe(13);
   });
 });

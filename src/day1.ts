@@ -105,6 +105,10 @@ export function findFirstLastDigit(str: string): number {
   return Number(`${firstDigit}${lastDigit}`);
 }
 
+export function findFirstLastNumber(str: string): number {
+  return Number(`${findFirstNumber(str)}${findLastNumber(str)}`);
+}
+
 export default function solution(calibrationValues: string[]): number {
   return calibrationValues.map(findFirstLastDigit).reduce((prev, accum) => {
     accum += prev;
