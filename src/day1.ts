@@ -44,19 +44,13 @@ Consider your entire calibration document. What is the sum of all of the
 calibration values?
 
 */
-import { readFileSync } from "node:fs";
-
-const file = readFileSync("./day1-input.txt", "utf-8");
-const calibrationValues = file
-  .split("\n")
-  .filter((el: string) => el.length > 0);
 
 //const calibrationValues = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
 
 // given a string, find first an last integers
 // what to do if no digits
 
-function findFirstLastDigit(str: string): number {
+export function findFirstLastDigit(str: string): number {
   const firstDigit = str.split("").find((el) => parseInt(el));
   const lastDigit = str
     .split("")
@@ -65,11 +59,9 @@ function findFirstLastDigit(str: string): number {
   return Number(`${firstDigit}${lastDigit}`);
 }
 
-function solution(calibrationValues: string[]): number {
+export default function solution(calibrationValues: string[]): number {
   return calibrationValues.map(findFirstLastDigit).reduce((prev, accum) => {
     accum += prev;
     return accum;
   }, 0);
 }
-
-console.log(solution(calibrationValues));
