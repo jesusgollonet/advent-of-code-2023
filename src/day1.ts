@@ -50,8 +50,6 @@ calibration values?
 // given a string, find first an last integers
 // what to do if no digits
 
-import loadTextFile from "../util/load-data";
-
 export function findFirstLastDigit(str: string): number {
   const firstDigit = str.split("").find((el) => parseInt(el));
   const lastDigit = str
@@ -67,6 +65,3 @@ export default function solution(calibrationValues: string[]): number {
     return accum;
   }, 0);
 }
-
-const calibrationValues = loadTextFile("./data/day1-input.txt");
-console.log(solution(calibrationValues));
