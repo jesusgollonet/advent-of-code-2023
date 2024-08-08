@@ -5,7 +5,7 @@ type GameRound = {
   cubes: CubeArrangement;
 };
 
-type CubeArrangement = {
+export type CubeArrangement = {
   red: number;
   green: number;
   blue: number;
@@ -40,19 +40,23 @@ export function isGamePossible(
   targetArrangement: CubeArrangement,
 ): boolean {
   for (let c in questionArrangement) {
-    console.log("heee");
-    console.log(c, questionArrangement[c]);
     if (targetArrangement[c] > questionArrangement[c]) return false;
   }
   return true;
 }
 
-export default function solution(gameStringList: string[]) {
+export default function solution(
+  gameStringList: string[],
+  questionArrangement: CubeArrangement,
+) {
   const gameData = gameStringList.map(parseGameLine);
-  console.log(
-    "is game possible",
-    isGamePossible({ red: 12, green: 13, blue: 14 }, gameData[2].cubes),
-  );
-  console.log(gameData);
-  return gameData;
+  const possibleGameIds = gameData
+    .filter((gd) => {
+      if (isGamePossible(questionArrangement, gd.cubes)) return gd;
+    })
+    .map((g) => parseInt(g.gameId));
+  const sum = possibleGameIds.reduce((prev, current) => {
+    return prev + current;
+  }, 0);
+  return sum;
 }

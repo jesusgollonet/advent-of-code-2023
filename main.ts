@@ -12,4 +12,4 @@ const day2Input = [
 // - n of games
 // - n balls of each type
 //
-console.log(solution(day2Input));
+console.log(solution(day2Input, { red: 12, green: 14, blue: 155 }));
