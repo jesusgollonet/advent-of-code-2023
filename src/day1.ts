@@ -1,3 +1,7 @@
+// given a string, find all occurences of a number as a char (e.g. 1,2)
+// or a number as a string
+//
+type Match = [number, string];
 const digitStrings = [
   "one",
   "two",
@@ -10,104 +14,80 @@ const digitStrings = [
   "nine",
 ];
 
-type Match = [number, string];
-
-export function findFirstDigitString(str: string): Match {
-  let matches = [];
-  for (let i = 0; i < digitStrings.length; i++) {
-    let curDs = digitStrings[i];
-    let curDsIndex = str.indexOf(curDs);
-    if (curDsIndex > -1) {
-      matches.push([curDsIndex, curDs]);
+export function parseWord(w: string): Match[] {
+  let counter = 0;
+  let matches: Match[] = [];
+  while (counter < w.length) {
+    let currentChar = w.charAt(counter);
+    if (parseInt(currentChar) >= 1 && parseInt(currentChar) <= 9) {
+      matches.push([counter, w.charAt(counter)]);
+    } else {
+      for (let i = 0; i < digitStrings.length; i++) {
+        let ds = digitStrings[i];
+        if (w.substring(counter).indexOf(ds) == 0) {
+          matches.push([counter, ds]);
+          break;
+        }
+      }
     }
+    counter++;
   }
 
-  const lowestMatch = matches.reduce((prev, current) => {
-    current = current[0] < prev[0] ? current : prev;
-    return current;
-  }, matches[0]);
-
-  return lowestMatch && lowestMatch[0] > -1 ? lowestMatch : [-1, ""];
+  return matches;
 }
 
-export function findLastDigitString(str: string): Match {
-  let matches = [];
-  for (let i = 0; i < digitStrings.length; i++) {
-    let curDs = digitStrings[i];
-    let curDsIndex = str.indexOf(curDs);
-    if (curDsIndex > -1) {
-      matches.push([curDsIndex, curDs]);
+// given a list of matches, return the one with biggest and lowest
+// empty matches
+// 1 match
+// 2 matches
+// more matches
+export function findExtremes(matches: Match[]): Match[] {
+  if (matches.length == 0) return [];
+  else if (matches.length == 1) return [matches[0], matches[0]];
+  else {
+    let min = matches[0];
+    let max = matches[0];
+    for (let i = 1; i < matches.length; i++) {
+      let m = matches[i];
+      if (m[0] < min[0]) min = m;
+      if (m[0] > max[0]) max = m;
     }
+    return [min, max];
   }
-
-  const highestMatch = matches.reduce((prev, current) => {
-    current = current[0] > prev[0] ? current : prev;
-    return current;
-  }, matches[0]);
-
-  return highestMatch && highestMatch[0] > -1 ? highestMatch : [-1, ""];
 }
 
-export function findFirstDigitChar(str: string): Match {
-  const firstDigitIndex = str.split("").findIndex((el) => parseInt(el));
-  let retVal: Match = [-1, ""];
-  if (firstDigitIndex > -1)
-    retVal = [firstDigitIndex, str.charAt(firstDigitIndex)];
-  return retVal;
-}
-
-export function findLastDigitChar(str: string): Match {
-  // there is no findLast in node yet
-  const reversedStringArr = str.split("").reverse();
-  const reversedFirstDigitIndex = reversedStringArr.findIndex((el) =>
-    parseInt(el),
-  );
-
-  let retVal: Match = [-1, ""];
-
-  if (reversedFirstDigitIndex > -1) {
-    retVal = [
-      str.length - 1 - reversedFirstDigitIndex,
-      reversedStringArr[reversedFirstDigitIndex],
-    ];
+export function singleMatchToNumber(str: string): number | undefined {
+  if (str.length == 1) return parseInt(str);
+  else {
+    const digitStringIndex = digitStrings.indexOf(str);
+    if (digitStringIndex > -1) {
+      return digitStringIndex + 1;
+    }
+    return undefined;
   }
-
-  return retVal;
 }
 
-//TODO refactor to avoid relying on destructured elements
-export function findFirstNumber(str: string): number {
-  console.log(str);
-  console.log("char", findFirstDigitChar(str));
-  console.log("string", findFirstDigitString(str));
-  const [firstCharIndex, firstChar] = findFirstDigitChar(str);
-  const [firstStringIndex, firstString] = findFirstDigitString(str);
+export function extremesToNumber(extremes: Match[]): number {
+  if (extremes.length == 0) return 0;
+  if (extremes.length == 1) return singleMatchToNumber(extremes[0][1]);
+  else {
+    let low = extremes[0];
+    let high = extremes[1];
+    return Number(
+      `${singleMatchToNumber(low[1])}${singleMatchToNumber(high[1])}`,
+    );
+  }
 }
 
-//TODO refactor to avoid relying on destructured elements
-export function findLastNumber(str: string): number {
-  const [lastCharIndex, lastChar] = findLastDigitChar(str);
-  const [lastStringIndex, lastString] = findLastDigitString(str);
-  let retVal: number;
-}
-
-export function findFirstLastDigit(str: string): number {
-  const firstDigit = str.split("").find((el) => parseInt(el));
-  const lastDigit = str
-    .split("")
-    .reverse()
-    .find((el) => parseInt(el));
-  return Number(`${firstDigit}${lastDigit}`);
-}
-
-export function findFirstLastNumber(str: string): number {
-  return Number(`${findFirstNumber(str)}${findLastNumber(str)}`);
-}
-
-export default function solution(calibrationValues: string[]): number {
-  return calibrationValues.map(findFirstLastNumber).reduce((prev, accum) => {
-    console.log("accum prev", accum, prev);
-    accum += prev;
-    return accum;
-  }, 0);
+export default function solution(list: string[]): number {
+  return list
+    .map((w) => {
+      const matches = parseWord(w);
+      const extremes = findExtremes(matches);
+      const num = extremesToNumber(extremes);
+      return num;
+    })
+    .reduce((prev, curr) => {
+      return curr + prev;
+    }, 0);
 }

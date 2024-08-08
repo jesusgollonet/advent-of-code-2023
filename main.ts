@@ -1,4 +1,4 @@
-import solution from "./src/day1-prime";
+import solution from "./src/day1";
 import loadTextFile from "./util/load-data";
 const calibrationValuesPart1 = [
   "1abc2",
@@ -16,5 +16,4 @@ const calibrationValuesPart2 = [
   "zoneight234",
   "7pqrstsixteen",
 ];
-console.log(solution(calibrationValuesPart2));
-//console.log(solution(loadTextFile("./data/day1-input.txt")));
+console.log(solution(loadTextFile("./data/day1-input.txt")));
