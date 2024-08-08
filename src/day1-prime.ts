@@ -14,14 +14,12 @@ const digitStrings = [
   "nine",
 ];
 
-function parseWord(w: string): Match[] {
+export function parseWord(w: string): Match[] {
   let counter = 0;
   let matches: Match[] = [];
   console.log(w);
   while (counter < w.length) {
     let currentChar = w.charAt(counter);
-    // if it's a number, we have a matcho
-
     if (parseInt(currentChar) >= 1 && parseInt(currentChar) <= 9) {
       matches.push([counter, w.charAt(counter)]);
     } else {
@@ -33,7 +31,6 @@ function parseWord(w: string): Match[] {
         }
       }
     }
-
     counter++;
   }
 
