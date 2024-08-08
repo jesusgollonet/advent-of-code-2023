@@ -1,4 +1,4 @@
-import solution from "./src/day1";
+import solution from "./src/day1-prime";
 import loadTextFile from "./util/load-data";
 
 const calibrationValuesPart2 = [

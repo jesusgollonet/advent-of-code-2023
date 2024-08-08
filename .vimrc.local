@@ -2,6 +2,6 @@ augroup copilot_disable
   autocmd!
   autocmd VimEnter * Copilot disable
 augroup END
-map ,r :w\|!npx ts-node %<CR>
-map ,t :w\|!npm run test<CR>
+map ,r :w\|!clear; npx ts-node main.ts<CR>
+map ,t :w\|!clear; npm run test<CR>
 
