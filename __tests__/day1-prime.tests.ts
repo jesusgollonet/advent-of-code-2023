@@ -62,3 +62,26 @@ describe("find extremes", () => {
     ).toBe("3");
   });
 });
+
+describe("sumb values", () => {
+  it("should return the sum of the values", () => {
+    const calibrationValuesPart1 = [
+      "1abc2",
+      "pqr3stu8vwx",
+      "a1b2c3d4e5f",
+      "treb7uchet",
+    ];
+
+    const calibrationValuesPart2 = [
+      "two1nine",
+      "eightwothree",
+      "abcone2threexyz",
+      "xtwone3four",
+      "4nineeightseven2",
+      "zoneight234",
+      "7pqrstsixteen",
+    ];
+    //expect(solution(calibrationValuesPart1)).toBe(142);
+    expect(solution(calibrationValuesPart2)).toBe(281);
+  });
+});

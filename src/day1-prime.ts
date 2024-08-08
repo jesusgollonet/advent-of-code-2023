@@ -17,7 +17,6 @@ const digitStrings = [
 export function parseWord(w: string): Match[] {
   let counter = 0;
   let matches: Match[] = [];
-  console.log(w);
   while (counter < w.length) {
     let currentChar = w.charAt(counter);
     if (parseInt(currentChar) >= 1 && parseInt(currentChar) <= 9) {
@@ -33,8 +32,6 @@ export function parseWord(w: string): Match[] {
     }
     counter++;
   }
-
-  console.log(matches);
 
   return matches;
 }
@@ -53,18 +50,47 @@ export function findExtremes(matches: Match[]): Match[] {
     for (let i = 1; i < matches.length; i++) {
       let m = matches[i];
       if (m[0] < min[0]) min = m;
-      else if (m[0] > max[0]) max = m;
+      if (m[0] > max[0]) max = m;
     }
     return [min, max];
   }
 }
 
-export default function solution(list: string[]): number {
-  console.log(list);
-  for (let i = 0; i < list.length; i++) {
-    let w = list[i];
-    parseWord(w);
+export function singleMatchToNumber(str: string): number | undefined {
+  if (str.length == 1) return parseInt(str);
+  else {
+    const digitStringIndex = digitStrings.indexOf(str);
+    if (digitStringIndex > -1) {
+      return digitStringIndex + 1;
+    }
+    return undefined;
   }
+}
 
-  return 0;
+export function extremesToNumber(extremes: Match[]): number {
+  if (extremes.length == 0) return 0;
+  if (extremes.length == 1) return singleMatchToNumber(extremes[0][1]);
+  else {
+    let low = extremes[0];
+    let high = extremes[1];
+    return Number(
+      `${singleMatchToNumber(low[1])}${singleMatchToNumber(high[1])}`,
+    );
+  }
+}
+
+export default function solution(list: string[]): number {
+  return list
+    .map((w) => {
+      console.log(w);
+      const matches = parseWord(w);
+      const extremes = findExtremes(matches);
+      console.log(extremes);
+      const num = extremesToNumber(extremes);
+      console.log(num);
+      return num;
+    })
+    .reduce((prev, curr) => {
+      return curr + prev;
+    }, 0);
 }

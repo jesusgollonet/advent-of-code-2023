@@ -16,5 +16,5 @@ const calibrationValuesPart2 = [
   "zoneight234",
   "7pqrstsixteen",
 ];
-console.log(solution(calibrationValuesPart1));
+console.log(solution(calibrationValuesPart2));
 //console.log(solution(loadTextFile("./data/day1-input.txt")));
