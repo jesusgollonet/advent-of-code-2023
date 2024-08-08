@@ -39,6 +39,26 @@ export function parseWord(w: string): Match[] {
   return matches;
 }
 
+// given a list of matches, return the one with biggest and lowest
+// empty matches
+// 1 match
+// 2 matches
+// more matches
+export function findExtremes(matches: Match[]): Match[] {
+  if (matches.length == 0) return [];
+  else if (matches.length == 1) return matches;
+  else {
+    let min = matches[0];
+    let max = matches[0];
+    for (let i = 1; i < matches.length; i++) {
+      let m = matches[i];
+      if (m[0] < min[0]) min = m;
+      else if (m[0] > max[0]) max = m;
+    }
+    return [min, max];
+  }
+}
+
 export default function solution(list: string[]): number {
   console.log(list);
   for (let i = 0; i < list.length; i++) {
