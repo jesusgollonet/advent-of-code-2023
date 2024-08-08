@@ -9,6 +9,7 @@ import solution, {
   findFirstLastNumber,
 } from "../src/day1";
 
+// jest-ignore
 const calibrationValuesPart1 = [
   "1abc2",
   "pqr3stu8vwx",
@@ -41,6 +42,7 @@ describe("part1 solution", () => {
     expect(solution(calibrationValuesPart2)).toBe(281);
   });
 });
+
 describe("findDigitStrings", () => {
   it("should find the first digit string", () => {
     expect(findFirstDigitString("two1nine")[1]).toBe("two");
@@ -85,13 +87,11 @@ describe("findDigitChars", () => {
   });
 
   it("should return the correct index for the last digit char", () => {
-    //expect(findLastDigitChar("two1nine")[0]).toBe(3);
     expect(findLastDigitChar("t1w")[0]).toBe(1);
     expect(findLastDigitChar("tt1w")[0]).toBe(2);
     expect(findLastDigitChar("t1wt")[0]).toBe(1);
     expect(findLastDigitChar("tt1wt")[0]).toBe(2);
     expect(findLastDigitChar("tt2abcd1wt")[0]).toBe(7);
-    //expect(findLastDigitChar("two1nine")[1]).toBe("1");
   });
 });
 

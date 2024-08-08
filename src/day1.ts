@@ -10,9 +10,9 @@ const digitStrings = [
   "nine",
 ];
 
-export function findFirstDigitString(
-  str: string,
-): [number, string] | undefined {
+type Match = [number, string];
+
+export function findFirstDigitString(str: string): Match {
   let matches = [];
   for (let i = 0; i < digitStrings.length; i++) {
     let curDs = digitStrings[i];
@@ -27,10 +27,10 @@ export function findFirstDigitString(
     return current;
   }, matches[0]);
 
-  return lowestMatch && lowestMatch[0] > -1 ? lowestMatch : undefined;
+  return lowestMatch && lowestMatch[0] > -1 ? lowestMatch : [-1, ""];
 }
 
-export function findLastDigitString(str: string): [number, string] | undefined {
+export function findLastDigitString(str: string): Match {
   let matches = [];
   for (let i = 0; i < digitStrings.length; i++) {
     let curDs = digitStrings[i];
@@ -45,25 +45,25 @@ export function findLastDigitString(str: string): [number, string] | undefined {
     return current;
   }, matches[0]);
 
-  return highestMatch && highestMatch[0] > -1 ? highestMatch : undefined;
+  return highestMatch && highestMatch[0] > -1 ? highestMatch : [-1, ""];
 }
 
-export function findFirstDigitChar(str: string): [number, string] | undefined {
+export function findFirstDigitChar(str: string): Match {
   const firstDigitIndex = str.split("").findIndex((el) => parseInt(el));
-  let retVal = undefined;
+  let retVal: Match = [-1, ""];
   if (firstDigitIndex > -1)
     retVal = [firstDigitIndex, str.charAt(firstDigitIndex)];
   return retVal;
 }
 
-export function findLastDigitChar(str: string): [number, string] | undefined {
+export function findLastDigitChar(str: string): Match {
   // there is no findLast in node yet
   const reversedStringArr = str.split("").reverse();
   const reversedFirstDigitIndex = reversedStringArr.findIndex((el) =>
     parseInt(el),
   );
 
-  let retVal = undefined;
+  let retVal: Match = [-1, ""];
 
   if (reversedFirstDigitIndex > -1) {
     retVal = [
@@ -71,33 +71,24 @@ export function findLastDigitChar(str: string): [number, string] | undefined {
       reversedStringArr[reversedFirstDigitIndex],
     ];
   }
+
   return retVal;
 }
 
+//TODO refactor to avoid relying on destructured elements
 export function findFirstNumber(str: string): number {
-  console.log("findFirstNumber", str);
-  const [firstCharIndex, firstChar] = findFirstDigitChar(str) || [];
-  const [firstStringIndex, firstString] = findFirstDigitString(str) || [];
-  console.log(firstCharIndex, firstChar);
-  console.log(firstStringIndex, firstString);
-
-  let retVal: number;
-  if (firstCharIndex < firstStringIndex) retVal = parseInt(firstChar);
-  else if (firstCharIndex > firstStringIndex)
-    retVal = digitStrings.indexOf(firstString) + 1;
-  else retVal = 0;
-  return retVal;
+  console.log(str);
+  console.log("char", findFirstDigitChar(str));
+  console.log("string", findFirstDigitString(str));
+  const [firstCharIndex, firstChar] = findFirstDigitChar(str);
+  const [firstStringIndex, firstString] = findFirstDigitString(str);
 }
 
+//TODO refactor to avoid relying on destructured elements
 export function findLastNumber(str: string): number {
-  const [lastCharIndex, lastChar] = findLastDigitChar(str) || [];
-  const [lastStringIndex, lastString] = findLastDigitString(str) || [];
+  const [lastCharIndex, lastChar] = findLastDigitChar(str);
+  const [lastStringIndex, lastString] = findLastDigitString(str);
   let retVal: number;
-  if (lastCharIndex > lastStringIndex) retVal = parseInt(lastChar);
-  else if (lastCharIndex < lastStringIndex)
-    retVal = digitStrings.indexOf(lastString) + 1;
-  else retVal = 0;
-  return retVal;
 }
 
 export function findFirstLastDigit(str: string): number {
@@ -110,12 +101,12 @@ export function findFirstLastDigit(str: string): number {
 }
 
 export function findFirstLastNumber(str: string): number {
-  console.log("find first last number", str);
   return Number(`${findFirstNumber(str)}${findLastNumber(str)}`);
 }
 
 export default function solution(calibrationValues: string[]): number {
   return calibrationValues.map(findFirstLastNumber).reduce((prev, accum) => {
+    console.log("accum prev", accum, prev);
     accum += prev;
     return accum;
   }, 0);
