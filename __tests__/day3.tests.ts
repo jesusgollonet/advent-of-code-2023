@@ -48,3 +48,17 @@ describe("number in last line", () => {
     expect(solutionPart1(["......", "482..."])).toBe(0);
   });
 });
+describe("number in right", () => {
+  it("should keep number if number and symbol are at the end", () => {
+    expect(solutionPart1([".....#", "...482"])).toBe(482);
+  });
+  it("should keep number if number is in pos 0 and symbol is not", () => {
+    expect(solutionPart1(["..@...", "...482"])).toBe(482);
+  });
+  it("should keep number if number is in pos 0 and symbol is diagonal", () => {
+    expect(solutionPart1(["....#.", "...482"])).toBe(482);
+  });
+  it("should not keep a number if the number is at the beginning of the line", () => {
+    expect(solutionPart1(["......", "...482"])).toBe(0);
+  });
+});
