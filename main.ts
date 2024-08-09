@@ -14,4 +14,5 @@ const schematic = [
   ".664.598..",
 ];
 
-console.log(solutionPart1(schematic));
+console.log(solutionPart1(loadTextFile("./data/day3-input.txt")));
+//console.log(solutionPart1(schematic));

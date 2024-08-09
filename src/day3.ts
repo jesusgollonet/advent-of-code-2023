@@ -1,4 +1,4 @@
-const isSymbol = (s: string): boolean => !s.match(/[a-zA-z0-9.]/);
+const isSymbol = (s: string): boolean => !s.match(/[a-zA-Z0-9.]/);
 export function solutionPart1(schematic: string[]): number {
   let numbersKept: string[] = [];
   for (let i = 0; i < schematic.length; i++) {
@@ -57,11 +57,11 @@ export function solutionPart1(schematic: string[]): number {
           if (keepNumber) {
             numbersKept.push(currentNumber);
 
-            currentNumber = "";
             // this is the end of the number
-            inNumber = false;
             keepNumber = false;
           }
+          currentNumber = "";
+          inNumber = false;
         }
       }
     }
