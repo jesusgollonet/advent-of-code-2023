@@ -42,6 +42,18 @@ export function isGamePossible(
   return true;
 }
 
+export function findMinimumArrangement(
+  rounds: CubeArrangement[],
+): CubeArrangement {
+  return rounds.reduce((prev, current) => {
+    for (let color in current) {
+      if (!prev[color] || current[color] > prev[color])
+        prev[color] = current[color];
+    }
+    return prev;
+  }, {});
+}
+
 export default function solution(
   gameStringList: string[],
   questionArrangement: CubeArrangement,

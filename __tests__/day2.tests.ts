@@ -1,4 +1,9 @@
-import solution, { parseGameLine, isGamePossible } from "../src/day2";
+import solution, {
+  parseGameLine,
+  isGamePossible,
+  findMinimumArrangement,
+  CubeArrangement,
+} from "../src/day2";
 
 describe("parse game line", () => {
   const line = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green";
@@ -34,7 +39,21 @@ describe("is game possible", () => {
     );
   });
 });
-describe("solution", () => {
+
+describe("minimum set of cubes", () => {
+  let rounds = [
+    { blue: 3, red: 4 },
+    { red: 1, green: 2, blue: 6 },
+    { green: 2 },
+  ];
+  it("should find the minimum set of cubes from a given game", () => {
+    let minimumArrangement: CubeArrangement = findMinimumArrangement(rounds);
+    expect(minimumArrangement.red).toBe(4);
+    expect(minimumArrangement.green).toBe(2);
+    expect(minimumArrangement.blue).toBe(6);
+  });
+});
+describe("part 1 solution", () => {
   const day2Input = [
     "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
     "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue",
