@@ -2,37 +2,33 @@ const trimString = (s: string) => s.trim();
 
 type GameRound = {
   gameId: string;
-  cubes: CubeArrangement;
+  rounds: CubeArrangement[];
 };
 
 export type CubeArrangement = {
-  red: number;
-  green: number;
-  blue: number;
+  red?: number;
+  green?: number;
+  blue?: number;
 };
 
 export function parseGameLine(gameLine: string): GameRound {
   const [gameKey, gameRounds] = gameLine.split(":").map(trimString);
   const gameId = gameKey.split(" ")[1];
   const gameRoundParts = gameRounds.split(";").map(trimString);
-  const gameRoundCubeSubsets = gameRoundParts
-    .map((grp) => {
-      return grp.split(",").map(trimString);
-    })
-    .flat();
+  const gameRoundCubeSubsets = gameRoundParts.map((grp) => {
+    return grp.split(",").map(trimString);
+  });
 
-  const accumulatedCubeSubsets = gameRoundCubeSubsets.reduce(
-    (prev, current) => {
-      const currentParts = current.split(" ").map(trimString);
-      const num = currentParts[0];
+  const accumulatedCubeSubsets = gameRoundCubeSubsets.map((r) => {
+    return r.reduce((prev, current) => {
+      const currentParts = current.split(" ");
+      const value = currentParts[0];
       const color = currentParts[1];
-      if (!prev[color]) prev[color] = parseInt(num);
-      else prev[color] += parseInt(num);
+      prev[color] = parseInt(value);
       return prev;
-    },
-    {},
-  );
-  return { gameId, cubes: accumulatedCubeSubsets as CubeArrangement };
+    }, {});
+  });
+  return { gameId, rounds: accumulatedCubeSubsets };
 }
 
 export function isGamePossible(
@@ -40,7 +36,8 @@ export function isGamePossible(
   targetArrangement: CubeArrangement,
 ): boolean {
   for (let c in questionArrangement) {
-    if (targetArrangement[c] > questionArrangement[c]) return false;
+    if (targetArrangement[c] && targetArrangement[c] > questionArrangement[c])
+      return false;
   }
   return true;
 }
@@ -52,7 +49,10 @@ export default function solution(
   const gameData = gameStringList.map(parseGameLine);
   const possibleGameIds = gameData
     .filter((gd) => {
-      if (isGamePossible(questionArrangement, gd.cubes)) return gd;
+      const impossibleGame = gd.rounds.find((r) => {
+        if (!isGamePossible(questionArrangement, r)) return r;
+      });
+      if (!impossibleGame) return gd;
     })
     .map((g) => parseInt(g.gameId));
   const sum = possibleGameIds.reduce((prev, current) => {

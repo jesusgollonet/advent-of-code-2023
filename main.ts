@@ -12,4 +12,18 @@ const day2Input = [
 // - n of games
 // - n balls of each type
 //
-console.log(solution(day2Input, { red: 12, green: 14, blue: 155 }));
+
+//console.log(
+//solution(day2Input, {
+//red: 12,
+//green: 14,
+//blue: 15,
+//}),
+//);
+console.log(
+  solution(loadTextFile("./data/day2-input.txt"), {
+    red: 12,
+    green: 13,
+    blue: 14,
+  }),
+);
