@@ -72,3 +72,18 @@ export default function solution(
   }, 0);
   return sum;
 }
+
+export function solutionPart2(gameStringList: string[]): number {
+  const gameData = gameStringList.map(parseGameLine);
+  return gameData
+    .map((g) => {
+      return findMinimumArrangement(g.rounds);
+    })
+    .map((arrangement) => {
+      return Object.values(arrangement).reduce(
+        (prev, current) => prev * current,
+        1,
+      );
+    })
+    .reduce((prev, current) => prev + current, 0);
+}

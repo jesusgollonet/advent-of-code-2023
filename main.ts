@@ -1,4 +1,4 @@
-import solution from "./src/day2";
+import solution, { solutionPart2 } from "./src/day2";
 import loadTextFile from "./util/load-data";
 const day2Input = [
   "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
@@ -27,3 +27,6 @@ console.log(
     blue: 14,
   }),
 );
+
+console.log(solutionPart2(day2Input));
+console.log(solutionPart2(loadTextFile("./data/day2-input.txt")));
