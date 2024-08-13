@@ -1,4 +1,60 @@
 const isSymbol = (s: string): boolean => !s.match(/[a-zA-Z0-9.]/);
+const isDigit = (s: string): boolean => s >= "0" && s <= "9";
+const isStar = (s: string): boolean => s === "*";
+
+// a gear can be in 4 states
+// found number
+// found gear
+// found second number
+//
+
+type PendingNumber = {
+  num: string;
+  i?: number;
+  j?: number;
+};
+
+export function solutionPart2(schematic: string[]): number {
+  // array to hold numbers that are not yet confirmed to be gears
+  let pendingNumbers = [];
+  for (let i = 0; i < schematic.length; i++) {
+    const line = schematic[i];
+    let pendingNumber: PendingNumber;
+
+    for (let j = 0; j < line.length; j++) {
+      let c = line[j];
+      if (isDigit(c)) {
+        if (!pendingNumber) {
+          pendingNumber = { num: c, i, j };
+        } else {
+          console.log("concat!");
+          pendingNumber.num = pendingNumber.num.concat(c);
+        }
+        console.log(c, "is a number");
+      } else if (isStar(c)) {
+        if (pendingNumber && pendingNumber.num) {
+          pendingNumbers.push(pendingNumber);
+          pendingNumber = null;
+        }
+        // check for adjacent numbers
+        console.log(c, "is a star");
+      } else {
+        //console.log(c, "is not a number or a star");
+        if (pendingNumber && pendingNumber.num) {
+          pendingNumbers.push(pendingNumber);
+          pendingNumber = null;
+        }
+      }
+    }
+
+    if (pendingNumber && pendingNumber.num) {
+      pendingNumbers.push(pendingNumber);
+      pendingNumber = null;
+    }
+  }
+  console.log(pendingNumbers);
+  return 0;
+}
 
 export function solutionPart1(schematic: string[]): number {
   let numbersKept: string[] = [];
@@ -9,7 +65,7 @@ export function solutionPart1(schematic: string[]): number {
     let keepNumber = false;
     for (let j = 0; j < line.length; j++) {
       let currentChar = line[j];
-      if (currentChar >= "0" && currentChar <= "9") {
+      if (isDigit(currentChar)) {
         if (!inNumber) {
           inNumber = true;
           // check pos -1 and current pos, including  1 up 1 down
@@ -67,6 +123,7 @@ export function solutionPart1(schematic: string[]): number {
       }
     }
 
+    // if we're at the end of the line and we want to store a number, go store it
     if (keepNumber) {
       numbersKept.push(currentNumber);
 

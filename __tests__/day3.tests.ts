@@ -1,19 +1,19 @@
-import { solutionPart1 } from "../src/day3";
+import { solutionPart1, solutionPart2 } from "../src/day3";
 
-describe("solution", () => {
-  const schematic = [
-    "467..114..",
-    "...*......",
-    "..35..633.",
-    "......#...",
-    "617*......",
-    ".....+.58.",
-    "..592.....",
-    "......755.",
-    "...$.*....",
-    ".664.598..",
-  ];
+const schematic = [
+  "467..114..",
+  "...*......",
+  "..35..633.",
+  "......#...",
+  "617*......",
+  ".....+.58.",
+  "..592.....",
+  "......755.",
+  "...$.*....",
+  ".664.598..",
+];
 
+describe("solution part 1", () => {
   it("should return the sum of part numbers", () => {
     expect(solutionPart1(schematic)).toBe(4361);
   });
@@ -60,5 +60,11 @@ describe("number in right", () => {
   });
   it("should not keep a number if the number is at the beginning of the line", () => {
     expect(solutionPart1(["......", "...482"])).toBe(0);
+  });
+});
+
+describe("solution part 2", () => {
+  it("should return a number", () => {
+    expect(solutionPart2(schematic)).toBe(0);
   });
 });
